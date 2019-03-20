@@ -1,25 +1,19 @@
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.*;
 
 public class demo01 {
 
     public static void main(String[] args) {
-        File file1 = new File("./resource/test01.txt");
-        File file2 = new File("E:/joke/resource/test01.txt");
         try {
+            File file1 = new File("./resource/论文初稿.txt");
             InputStream fs1 = new FileInputStream(file1);
-            System.out.println(fs1.read());
-
-            InputStream fs2 = new FileInputStream(file2);
-            System.out.println(fs2.read());
-
-
-            boolean eqs = fs1.equals(fs2);
-            System.out.println(eqs);
-
-            System.out.println(fs1.toString());
+            BufferedInputStream bf1 = new BufferedInputStream(fs1);
+            BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream("././resource/testOut.txt"));
+            byte[] bytes = new byte[256];
+            int len;
+            while ((len = bf1.read(bytes)) != -1) {
+                outputStream.write(bytes, 0, len);
+            }
+            outputStream.close();
         } catch (java.io.IOException e) {
             e.printStackTrace();
         }
